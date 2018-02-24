@@ -376,6 +376,12 @@ textarea {
   outline-offset: -2px; /* 2 */
 }
 
+input,
+select,
+textarea {
+  outline: none;
+}
+
 /**
  * Remove the inner padding and cancel buttons in Chrome and Safari on macOS.
  */

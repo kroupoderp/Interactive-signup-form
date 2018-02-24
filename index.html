@@ -7,10 +7,126 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Merriweather">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/flexbox.css">
   </head>
   <body>
-    <h1>The Code review</h1>
+    <header>
+      <div class="banner">
+        <h1>The Code review</h1>
+      </div>
+
+      <div class="intro">
+        <h2>Signup for our newsletter</h2>
+        <p>Get the latest news on how your code is doing right in your inbox.</p>
+      </div>
+    </header>
+
+<main>
+  <hr>
+  <form action="index.html" method="post">
+
+    <fieldset class="contact_information clearfix">
+
+        <legend><h2>Contact information</h2> </legend>
+
+        <div class="clearfix wrap">
+        <span><label for="full_name">Full Name</label></span>
+          <input id="full_name" type="text" name="person_name" placeholder="required" required>
+        </div>
+
+        <div class="clearfix wrap">
+          <label for="email_address">Email Address</label>
+          <input id="email_address" type="email" name="email" placeholder="required" required>
+        </div>
+
+        <div class="clearfix wrap">
+          <label for="phone_number">Phone Number</label>
+          <input id="phone_number" type="tel" name="phone">
+        </div>
+
+        <div class="clearfix wrap">
+          <label for="street_address">Street Address</label>
+          <input id="street_address" type="text" name="address">
+        </div>
+
+        <div class="clearfix wrap">
+          <label for="city">City</label>
+          <input id="city" type="text" name="city">
+        </div>
+
+        <div class="clearfix wrap">
+          <label for="province">Province</label>
+          <select id="province" name="province">
+              <option value="ON">ON</option>
+              <option value="QC">QC</option>
+              <option value="BC">BC</option>
+              <option value="AB">AB</option>
+              <option value="MB">MB</option>
+              <option value="SK">SK</option>
+              <option value="NS">NS</option>
+              <option value="NS">NB</option>
+              <option value="NL">NL</option>
+              <option value="PE">PE</option>
+              <option value="NT">NT</option>
+              <option value="YT">YT</option>
+              <option value="NU">NU</option>
+          </select>
+        </div>
+
+        <div class="clearfix wrap">
+          <label for="postal_code">Postal Code</label>
+          <input id="postal_code" type="text" name="postal_code" maxlength="6">
+        </div>
+
+    </fieldset>
+
+    <fieldset class="newsletter">
+
+      <legend><h2>Newsletter</h2></legend>
+      <p>Select the newsletters you would like to receive:</p>
+
+      <input id="html" type="checkbox" name="html" value="html_news">
+      <label id="kk" for="html">HTML News</label>
+      <br>
+
+      <input id="css" type="checkbox" name="css" value="css_news">
+      <label for="css">CSS News</label>
+      <br>
+
+      <input id="js" type="checkbox" name="js" value="js_news">
+      <label for="js">JavaScript News</label>
+      <br>
+
+      <input id="python" type="checkbox" name="python" value="python_news">
+      <label for="python">Python News</label>
+      <br>
+
+      <input id="ruby" type="checkbox" name="ruby" value="ruby_news">
+      <label for="ruby">Ruby News</label>
+      <br>
+
+      <p>Newletter format</p>
+
+      <input id="html_format" type="radio" name="format" value="html_format">
+      <label for="html_format">HTML</label>
+      <br>
+
+      <input id="plaintext_format" type="radio" name="format" value="plaintext_format">
+      <label for="plaintext_format">Plaintext</label>
+      <br>
+
+      <label for="other_topics">Other topics you would like to hear about</label><br>
+      <textarea id="other_topics" name="other_topics"></textarea>
+      <br>
+
+    </fieldset>
+
+    <button type="reset">Sign Up</button>
+  </form>
+</main>
+
+    <footer>
+      <p>&copy; The Code Review</p>
+    </footer>
 
   </body>
 </html>
