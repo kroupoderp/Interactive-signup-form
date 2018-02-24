@@ -64,6 +64,13 @@ button:focus {
     outline: none;
 }
 
+/* Removes red box shadow around an input element whenever firefox
+   detects an invalid format. */
+
+input:invalid {
+    box-shadow: none;
+}
+
 input:focus,
 select:focus,
 textarea:focus {
@@ -212,7 +219,7 @@ fieldset:first-child legend h2 {
   clear: both;
 }
 
-@media (min-width: 769px) {
+@media (min-width: 768px) {
 
   .wrap input, select {
     float: right;
