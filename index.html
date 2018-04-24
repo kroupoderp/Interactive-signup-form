@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Merriweather">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
+    <script type="text/javascript" src="js/script.js"></script>
   </head>
   <body>
     <header>
@@ -22,7 +23,7 @@
 
 <main>
   <hr>
-  <form action="index.html" method="post">
+  <form action="index.html" method="post" novalidate>
 
     <fieldset class="contact_information clearfix">
 
@@ -31,16 +32,19 @@
         <div class="clearfix wrap">
         <span><label for="full_name">Full Name</label></span>
           <input id="full_name" type="text" name="person_name" placeholder="required" required>
+          <p class="warn"></p>
         </div>
 
         <div class="clearfix wrap">
           <label for="email_address">Email Address</label>
           <input id="email_address" type="email" name="email" placeholder="required" required>
+          <p class="warn"></p>
         </div>
 
         <div class="clearfix wrap">
           <label for="phone_number">Phone Number</label>
           <input id="phone_number" type="tel" name="phone">
+          <p class="warn"></p>
         </div>
 
         <div class="clearfix wrap">
@@ -75,6 +79,7 @@
         <div class="clearfix wrap">
           <label for="postal_code">Postal Code</label>
           <input id="postal_code" type="text" name="postal_code" maxlength="6">
+          <p class="warn"></p>
         </div>
 
     </fieldset>
