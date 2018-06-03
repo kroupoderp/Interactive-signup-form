@@ -121,7 +121,7 @@ select:-webkit-autofill
   padding-right: 15px;
 }
 
-input, textarea, select {
+input, textarea, select, .trasp {
   margin-bottom: 25px;
   margin-top: 10px;
   width: 100%;
@@ -131,6 +131,35 @@ input, textarea, select {
   background: #dcdcdc;
   font-family: inherit;
   padding-left: 8px;
+}
+
+.trasp {
+  float: right;
+  position: absolute;
+  right: 0;
+  top: 18px;
+  z-index: -100;
+}
+
+select {
+  background: transparent;
+  outline: none;
+  -moz-appearance: none;
+       appearance: none;
+  -webkit-appearance: none;
+}
+
+svg {
+  float: right;
+  width: 1em;
+  position: relative;
+  right: 8px;
+  top: 16px;
+  z-index: -100;
+}
+
+.clearfix:nth-of-type(6) {
+  position: relative;
 }
 
 #postal_code {
@@ -221,7 +250,7 @@ fieldset:first-child legend h2 {
 
 @media (min-width: 768px) {
 
-  .wrap input, select {
+  .wrap input, select, .trasp {
     float: right;
     margin-top: 17.5px;
     margin-bottom: 17.5px;
@@ -242,29 +271,31 @@ fieldset:first-child legend h2 {
     width: 230px !important;
     right: 215.89px;
   }
+
+  svg {
+    float: none;
+    top: 19px;
+    left: 408px;
+  }
+
+  .trasp {
+    position: absolute;
+    top: 0;
+    z-index: -100;
+  }
+
+  .warn {
+      font-size: 12px;
+      color: red;
+      margin: 0;
+      position: relative;
+      bottom:18px;
+      display: none;
+  }
+
+  .warn {
+      margin: 0 0 0 240px;
+      clear: both;
+      bottom:11px;
+  }
 }
-
-
-
-
-.warn {
-    font-size: 12px;
-    color: red;
-    margin: 0;
-    position: relative;
-    bottom:18px;
-    display: none;
-}
-
-@media (min-width: 768px) {
-    .warn {
-        margin: 0 0 0 240px;
-        clear: both;
-        bottom:11px;
-    }
-}
-
-
-
-
-

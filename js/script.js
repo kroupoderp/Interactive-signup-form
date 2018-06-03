@@ -3,16 +3,15 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     let mistakes = 0;
-
     // regular expressions
-    let e_format = /[^@]+@[^@]+\.[a-z]{2,3}$/i;
-    let p_format = /\w{6}$/;
-    let num_format = /^[0-9]{10,11}$/;
+    let email_format = /[^@]+@[^@]+\.[a-z]{2,3}$/i;
+    let postal_code_format = /\w{6}$/;
+    let phone_num_format = /^[0-9]{10,11}$/;
 
     let contact_info = document.getElementsByClassName('contact_information')[0];
     let ban = document.getElementsByClassName("warn");
 
-    function banner(message, i) {
+    function create_warning(message, i) {
         ban[i].textContent = message;
         ban[i].style.display = "block";
     }
@@ -24,35 +23,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (e.target.id === "full_name") {
             if (val.length === 0) {
-                banner("* Please provide a name", 0);
+                create_warning("* Please provide a name", 0);
             } else {
-                banner("", 0);
+                create_warning("", 0);
             }
         }
 
         if (e.target.id === "email_address") {
             if (val.length === 0) {
-                banner("* Please provide an email", 1);
-            } else if (val.search(e_format) === -1 && val.length > 0) {
-                banner("* That does not look like a valid email address", 1)
+                create_warning("* Please provide an email", 1);
+            } else if (val.search(email_format) === -1 && val.length > 0) {
+                create_warning("* That does not look like a valid email address", 1)
             } else {
-                banner("", 1);
+                create_warning("", 1);
             }
         }
 
         if (e.target.id === "phone_number") {
-            if (val.search(num_format) === -1 && val.length > 0) {
-                banner("Not a valid phone number, make sure to include only numbers", 2)
+            if (val.search(phone_num_format) === -1 && val.length > 0) {
+                create_warning("Not a valid phone number, make sure to include only numbers", 2)
             } else {
-                banner("", 2);
+                create_warning("", 2);
             }
         }
 
         if (e.target.id === "postal_code") {
-            if (val.search(p_format) === -1 && val.length !== 0) {
-                banner("Postal code is invalid", 3)
+            if (val.search(postal_code_format) === -1 && val.length !== 0) {
+                create_warning("Postal code is invalid", 3)
             } else {
-                banner("", 3);
+                create_warning("", 3);
             }
         }
     });
@@ -65,10 +64,10 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', function(e) {
 
         if (n.value.length === 0) {
-            banner("* Please provide a name", 0);
+            create_warning("* Please provide a name", 0);
         }
         if (el.value.length === 0) {
-            banner("* Please provide an email", 1)
+            create_warning("* Please provide an email", 1)
         }
 
         if(ban[0].textContent) {
@@ -90,8 +89,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if(mistakes > 0) {
             e.preventDefault();
-            alert(message);
+            swal({
+              title: "There are errors in this form",
+              text: message,
+              icon: "warning"
+            });
+
             message = "Please check the following fields: \n";
+        }   else {
+              e.preventDefault();
+              swal({
+                title: "Thank you for signing up",
+                icon: "success"
+              });
+              $('.swal-button').on('click', () => {
+                $('html, body').scrollTop(0);
+                form.reset();
+              });
+
         }
-    });
+      });
 });
