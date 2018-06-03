@@ -1,6 +1,7 @@
 # Signup form
 
-The signup form contains all of the common HTML form fields: input, button, select, textarea, radio button, checkbox and so on. There is JavaScript functionality which checks if the mandatory fields have been filled out before submitting the form. I also included regular expressions that check if the email address, phone number and postal code are valid format, if not a message in red will be displayed to the user right beneath the form element once it loses focus. If a user hits the submit button and there are mistakes in the form, a modal window will be displayed telling which form fields need to be fixed. If there are no mistakes and the user hits the submit button, a modal window will display thanking the user for signing up, and the form will get reset.  
+The signup form contains all the common HTML form fields: input, button, select, textarea, radio button, checkbox and so on. There is JavaScript functionality which checks if the mandatory fields have been filled out before submitting the form. I also included regular expressions that check if the email address, phone number and postal code are valid format, if not a message in red will be displayed to the user right beneath the form element once it loses focus. If a user hits the submit button and there are mistakes in the form, a modal window will be displayed telling which form fields need to be fixed. If there are no mistakes and the user hits the submit button, a modal window will display thanking the user for signing up, and the form will get reset.
+Note: there is no back end functionality. 
 
 <img width="1280" alt="img-1" src="https://user-images.githubusercontent.com/23324252/40889894-1cae5f52-673c-11e8-94e4-2cb73897f1ab.png">
 
