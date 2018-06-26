@@ -142,7 +142,7 @@ input, textarea, select, .trasp {
 }
 
 select {
-  background: transparent;
+  background-color: transparent !important;
   outline: none;
   -moz-appearance: none;
        appearance: none;
