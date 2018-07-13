@@ -1,25 +1,30 @@
 
 
+
+let initital_state = {
+    full_name: "",
+    email_address: "",
+    phone_number: "",
+    street_address: "",
+    city: "",
+    province: "",
+    postal_code: "",
+    html: false,
+    css: false,
+    js: false,
+    python: false,
+    ruby: false,
+    format: "",
+    other_topics: "",
+};
+
+
+
 class Form extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            full_name: "",
-            email_address: "",
-            phone_number: "",
-            street_address: "",
-            city: "",
-            province: "",
-            postal_code: "",
-            html: false,
-            css: false,
-            js: false,
-            python: false,
-            ruby: false,
-            format: "",
-            other_topics: "",
-        };
+        this.state = this.props.prog;
 
         this.updateProgress = this.updateProgress.bind(this);
     }
@@ -84,6 +89,7 @@ class Form extends React.Component {
     componentDidMount() {           // contains code for validation
         let mistakes = 0;
 
+        let name_format = /^[a-zA-Z\s]+$/i;
         let email_format = /[^@]+@[^@]+\.[a-z]{2,3}$/i;
         let postal_code_format = /\w{6}$/;
         let phone_num_format = /^[0-9]{10,11}$/;
@@ -104,16 +110,19 @@ class Form extends React.Component {
         }
 
         let inputs = document.querySelectorAll('.validation');
+        // form fields that require validation
 
-        function validate(e) {
+        function validate(e) {      // function runs on focusout and submit
             mistakes = 0;
 
             if (e.target.id === "full_name" || e.type === "submit") {
-                // instead of val use the inputs object
                 if (inputs[0].value.length === 0) {
                     create_warning("* Please provide a name", 0);
-                } else {
-                    create_warning("", 0, true);
+                }   else if(inputs[0].value.search(name_format)
+                        && inputs[0].value.length > 0) {
+                        create_warning("The name can only contain letters and spaces", 0)
+                }   else {
+                        create_warning("", 0, true);
                 }
             }
             if (e.target.id === "email_address" || e.type === "submit") {
@@ -143,6 +152,7 @@ class Form extends React.Component {
                 }
             }
 
+            // removes the input event handler for browser auto fills
             for(let i = 0; i < inputs.length; i++) {
                 inputs[i].removeEventListener('input', auto_fill);
             }
@@ -150,10 +160,13 @@ class Form extends React.Component {
 
         contact_info.addEventListener('focusout', validate);
 
+
+        // function used by unfocused input fields to validate autofill
         function auto_fill(e) {
             validate(e);
         }
 
+        // adds the auto fill event handler to all unfocused input fields
         for(let x = 0; x < inputs.length; x++) {
             inputs[x].addEventListener('focus', function(e) {
                 for(let i = 0; i < inputs.length; i++) {
@@ -163,6 +176,9 @@ class Form extends React.Component {
                 }
             });
         }
+
+
+
 
         let message = "Please check the following fields: \n";
         let form = document.getElementsByTagName('form')[0];
@@ -375,4 +391,6 @@ class Form extends React.Component {
     }
 }
 
-ReactDOM.render(<Form/>, document.getElementsByClassName('signup')[0]);
+Form.propTypes = {prog: React.PropTypes.object.isRequired};
+
+ReactDOM.render(<Form prog={initital_state}/>, document.getElementsByClassName('signup')[0]);
