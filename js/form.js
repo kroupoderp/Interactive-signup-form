@@ -1,7 +1,7 @@
 
 
 
-let initital_state = {
+let initial_state = {
     full_name: "",
     email_address: "",
     phone_number: "",
@@ -220,22 +220,9 @@ class Form extends React.Component {
                 $('.swal-button').on('click', () => {
                     $('html, body').scrollTop(0);
                     sessionStorage.removeItem('recentProgress')
-                    this.setState({
-                        full_name: "",
-                        email_address: "",
-                        phone_number: "",
-                        street_address: "",
-                        city: "",
-                        province: "",
-                        postal_code: "",
-                        html: false,
-                        css: false,
-                        js: false,
-                        python: false,
-                        ruby: false,
-                        format: "",
-                        other_topics: "",
-                    })
+                    this.setState(
+                        initial_state
+                    )
                 });
             }
         });
@@ -393,4 +380,4 @@ class Form extends React.Component {
 
 Form.propTypes = {prog: React.PropTypes.object.isRequired};
 
-ReactDOM.render(<Form prog={initital_state}/>, document.getElementsByClassName('signup')[0]);
+ReactDOM.render(<Form prog={initial_state}/>, document.getElementsByClassName('signup')[0]);
