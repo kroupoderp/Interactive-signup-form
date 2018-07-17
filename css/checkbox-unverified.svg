@@ -1,0 +1,5 @@
+<svg overflow="visible" style="overflow: visible" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 512 512">
+    <g fill="#4169e1">
+        <path stroke="#4169e1" stroke-width="0.1" d="M452 0H60C26.916 0 0 26.916 0 60v392c0 33.084 26.916 60 60 60h392c33.084 0 60-26.916 60-60V60c0-33.084-26.916-60-60-60zm20 452c0 11.028-8.972 20-20 20H60c-11.028 0-20-8.972-20-20V60c0-11.028 8.972-20 20-20h392c11.028 0 20 8.972 20 20v392z"/>
+    </g>
+</svg>

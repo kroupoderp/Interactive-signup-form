@@ -44,6 +44,24 @@ class Form extends React.Component {
         }
     }
 
+    toggleCheck(e) {
+
+        let evt = new Event('input', {bubbles: true});
+
+        if(e.target.tagName === "SPAN") {
+
+            let input = e.target.previousElementSibling;
+            input.checked = !input.checked;
+            input.dispatchEvent(evt);
+        }
+            else if (e.target.tagName === "LABEL") {
+
+                let input = e.target.previousElementSibling.previousElementSibling;
+                input.checked = !input.checked;
+                input.dispatchEvent(evt);
+        }
+    }
+
     supportsLocalStorage() {
         try {
             return 'sessionStorage' in window && window['sessionStorage'] !== null;
@@ -51,7 +69,6 @@ class Form extends React.Component {
             return false;
         }
     }
-
 
     // start of component lifecycle methods excluding render
     componentDidUpdate() {
@@ -219,10 +236,24 @@ class Form extends React.Component {
                 });
                 $('.swal-button').on('click', () => {
                     $('html, body').scrollTop(0);
-                    sessionStorage.removeItem('recentProgress')
-                    this.setState(
-                        initial_state
-                    )
+                    console.log($("form").serialize());
+                    sessionStorage.removeItem('recentProgress');
+                    this.setState({
+                        full_name: "",
+                        email_address: "",
+                        phone_number: "",
+                        street_address: "",
+                        city: "",
+                        province: "",
+                        postal_code: "",
+                        html: false,
+                        css: false,
+                        js: false,
+                        python: false,
+                        ruby: false,
+                        format: "",
+                        other_topics: "",
+                    })
                 });
             }
         });
@@ -324,44 +355,52 @@ class Form extends React.Component {
                         <legend><h2>Newsletter</h2></legend>
                         <p>Select the newsletters you would like to receive:</p>
 
-                        <input onChange={this.updateProgress} checked={this.state.html}
+                        <input onChange={this.change} onInput={this.updateProgress} checked={this.state.html}
                                id="html" type="checkbox" name="html" value="html_news"/>
-                            <label id="kk" htmlFor="html">HTML News</label>
+                        <span onClick={this.toggleCheck}></span>
+                            <label onClick={this.toggleCheck} id="kk" htmlFor="html">HTML News</label>
                         <br/>
 
-                        <input onChange={this.updateProgress} checked={this.state.css}
+                        <input onChange={this.change} onInput={this.updateProgress} checked={this.state.css}
                                id="css" type="checkbox" name="css" value="css_news"/>
-                            <label htmlFor="css">CSS News</label>
+                        <span onClick={this.toggleCheck}></span>
+                            <label onClick={this.toggleCheck} htmlFor="css">CSS News</label>
                         <br/>
 
-                        <input onChange={this.updateProgress} checked={this.state.js}
+                        <input onChange={this.change} onInput={this.updateProgress} checked={this.state.js}
                                id="js" type="checkbox" name="js" value="js_news"/>
-                            <label htmlFor="js">JavaScript News</label>
+                        <span onClick={this.toggleCheck}></span>
+                            <label onClick={this.toggleCheck} htmlFor="js">JavaScript News</label>
                         <br/>
 
-                        <input onChange={this.updateProgress} checked={this.state.python}
+                        <input onChange={this.change} onInput={this.updateProgress} checked={this.state.python}
                                id="python" type="checkbox" name="python" value="python_news"/>
-                            <label htmlFor="python">Python News</label>
+                        <span onClick={this.toggleCheck}></span>
+                            <label onClick={this.toggleCheck} htmlFor="python">Python News</label>
                         <br/>
 
-                        <input onChange={this.updateProgress} checked={this.state.ruby}
+                        <input onChange={this.change} onInput={this.updateProgress} checked={this.state.ruby}
                                id="ruby" type="checkbox" name="ruby" value="ruby_news"/>
-                            <label htmlFor="ruby">Ruby News</label>
+                        <span onClick={this.toggleCheck}></span>
+                            <label onClick={this.toggleCheck} htmlFor="ruby">Ruby News</label>
+
                         <br/>
 
-                        <p>Newletter format</p>
+                        <p className="newsletter_format">Newletter format</p>
 
-                        <input onChange={this.updateProgress} checked={this.state.format === "html_format"}
+                        <input onChange={this.change} onInput={this.updateProgress} checked={this.state.format === "html_format"}
                                id="html_format" type="radio" name="format" value="html_format"/>
-                            <label htmlFor="html_format">HTML</label>
+                        <span onClick={this.toggleCheck}></span>
+                            <label onClick={this.toggleCheck} htmlFor="html_format">HTML</label>
                         <br/>
 
-                        <input onChange={this.updateProgress} checked={this.state.format === "plaintext_format"}
+                        <input onChange={this.change} onInput={this.updateProgress} checked={this.state.format === "plaintext_format"}
                                id="plaintext_format" type="radio" name="format" value="plaintext_format"/>
-                            <label htmlFor="plaintext_format">Plaintext</label>
+                        <span onClick={this.toggleCheck}></span>
+                            <label onClick={this.toggleCheck} htmlFor="plaintext_format">Plaintext</label>
                         <br/>
 
-                        <label htmlFor="other_topics">Other topics you would like to hear about</label><br/>
+                        <label id="other_topics_label" htmlFor="other_topics">Other topics you would like to hear about</label><br/>
                             <textarea onChange={this.updateProgress} value={this.state.other_topics}
                                id="other_topics" name="other_topics"></textarea>
                         <br/>
