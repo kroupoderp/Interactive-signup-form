@@ -69,6 +69,23 @@ function _inherits(subClass, superClass) {
             : (subClass.__proto__ = superClass);
 }
 
+var initial_state = {
+    full_name: "",
+    email_address: "",
+    phone_number: "",
+    street_address: "",
+    city: "",
+    province: "",
+    postal_code: "",
+    html: false,
+    css: false,
+    js: false,
+    python: false,
+    ruby: false,
+    format: "",
+    other_topics: ""
+};
+
 var Form = (function(_React$Component) {
     _inherits(Form, _React$Component);
 
@@ -80,22 +97,7 @@ var Form = (function(_React$Component) {
             (Form.__proto__ || Object.getPrototypeOf(Form)).call(this, props)
         );
 
-        _this.state = {
-            full_name: "",
-            email_address: "",
-            phone_number: "",
-            street_address: "",
-            city: "",
-            province: "",
-            postal_code: "",
-            html: false,
-            css: false,
-            js: false,
-            python: false,
-            ruby: false,
-            format: "",
-            other_topics: ""
-        };
+        _this.state = _this.props.prog;
 
         _this.updateProgress = _this.updateProgress.bind(_this);
         return _this;
@@ -113,6 +115,22 @@ var Form = (function(_React$Component) {
                     } else if (e.target.type === "radio") {
                         this.setState({ format: e.target.id });
                     }
+                }
+            }
+        },
+        {
+            key: "toggleCheck",
+            value: function toggleCheck(e) {
+                var evt = new Event("input", { bubbles: true });
+
+                if (e.target.tagName === "SPAN") {
+                    var input = e.target.previousElementSibling;
+                    input.checked = !input.checked;
+                    input.dispatchEvent(evt);
+                } else if (e.target.tagName === "LABEL") {
+                    var _input = e.target.previousElementSibling.previousElementSibling;
+                    _input.checked = !_input.checked;
+                    _input.dispatchEvent(evt);
                 }
             }
         },
@@ -172,6 +190,7 @@ var Form = (function(_React$Component) {
                 // contains code for validation
                 var mistakes = 0;
 
+                var name_format = /^[a-zA-Z\s]+$/i;
                 var email_format = /[^@]+@[^@]+\.[a-z]{2,3}$/i;
                 var postal_code_format = /\w{6}$/;
                 var phone_num_format = /^[0-9]{10,11}$/;
@@ -194,14 +213,20 @@ var Form = (function(_React$Component) {
                 }
 
                 var inputs = document.querySelectorAll(".validation");
+                // form fields that require validation
 
                 function validate(e) {
+                    // function runs on focusout and submit
                     mistakes = 0;
 
                     if (e.target.id === "full_name" || e.type === "submit") {
-                        // instead of val use the inputs object
                         if (inputs[0].value.length === 0) {
                             create_warning("* Please provide a name", 0);
+                        } else if (
+                            inputs[0].value.search(name_format) &&
+                            inputs[0].value.length > 0
+                        ) {
+                            create_warning("The name can only contain letters and spaces", 0);
                         } else {
                             create_warning("", 0, true);
                         }
@@ -245,6 +270,7 @@ var Form = (function(_React$Component) {
                         }
                     }
 
+                    // removes the input event handler for browser auto fills
                     for (var i = 0; i < inputs.length; i++) {
                         inputs[i].removeEventListener("input", auto_fill);
                     }
@@ -252,10 +278,12 @@ var Form = (function(_React$Component) {
 
                 contact_info.addEventListener("focusout", validate);
 
+                // function used by unfocused input fields to validate autofill
                 function auto_fill(e) {
                     validate(e);
                 }
 
+                // adds the auto fill event handler to all unfocused input fields
                 for (var x = 0; x < inputs.length; x++) {
                     inputs[x].addEventListener("focus", function(e) {
                         for (var i = 0; i < inputs.length; i++) {
@@ -305,6 +333,7 @@ var Form = (function(_React$Component) {
                         });
                         $(".swal-button").on("click", function() {
                             $("html, body").scrollTop(0);
+                            console.log($("form").serialize());
                             sessionStorage.removeItem("recentProgress");
                             _this2.setState({
                                 full_name: "",
@@ -543,99 +572,125 @@ var Form = (function(_React$Component) {
                                     "Select the newsletters you would like to receive:"
                                 ),
                                 React.createElement("input", {
-                                    onChange: this.updateProgress,
+                                    onChange: this.change,
+                                    onInput: this.updateProgress,
                                     checked: this.state.html,
                                     id: "html",
                                     type: "checkbox",
                                     name: "html",
                                     value: "html_news"
                                 }),
+                                React.createElement("span", { onClick: this.toggleCheck }),
                                 React.createElement(
                                     "label",
-                                    { id: "kk", htmlFor: "html" },
+                                    { onClick: this.toggleCheck, id: "kk", htmlFor: "html" },
                                     "HTML News"
                                 ),
                                 React.createElement("br", null),
                                 React.createElement("input", {
-                                    onChange: this.updateProgress,
+                                    onChange: this.change,
+                                    onInput: this.updateProgress,
                                     checked: this.state.css,
                                     id: "css",
                                     type: "checkbox",
                                     name: "css",
                                     value: "css_news"
                                 }),
-                                React.createElement("label", { htmlFor: "css" }, "CSS News"),
+                                React.createElement("span", { onClick: this.toggleCheck }),
+                                React.createElement(
+                                    "label",
+                                    { onClick: this.toggleCheck, htmlFor: "css" },
+                                    "CSS News"
+                                ),
                                 React.createElement("br", null),
                                 React.createElement("input", {
-                                    onChange: this.updateProgress,
+                                    onChange: this.change,
+                                    onInput: this.updateProgress,
                                     checked: this.state.js,
                                     id: "js",
                                     type: "checkbox",
                                     name: "js",
                                     value: "js_news"
                                 }),
+                                React.createElement("span", { onClick: this.toggleCheck }),
                                 React.createElement(
                                     "label",
-                                    { htmlFor: "js" },
+                                    { onClick: this.toggleCheck, htmlFor: "js" },
                                     "JavaScript News"
                                 ),
                                 React.createElement("br", null),
                                 React.createElement("input", {
-                                    onChange: this.updateProgress,
+                                    onChange: this.change,
+                                    onInput: this.updateProgress,
                                     checked: this.state.python,
                                     id: "python",
                                     type: "checkbox",
                                     name: "python",
                                     value: "python_news"
                                 }),
+                                React.createElement("span", { onClick: this.toggleCheck }),
                                 React.createElement(
                                     "label",
-                                    { htmlFor: "python" },
+                                    { onClick: this.toggleCheck, htmlFor: "python" },
                                     "Python News"
                                 ),
                                 React.createElement("br", null),
                                 React.createElement("input", {
-                                    onChange: this.updateProgress,
+                                    onChange: this.change,
+                                    onInput: this.updateProgress,
                                     checked: this.state.ruby,
                                     id: "ruby",
                                     type: "checkbox",
                                     name: "ruby",
                                     value: "ruby_news"
                                 }),
-                                React.createElement("label", { htmlFor: "ruby" }, "Ruby News"),
+                                React.createElement("span", { onClick: this.toggleCheck }),
+                                React.createElement(
+                                    "label",
+                                    { onClick: this.toggleCheck, htmlFor: "ruby" },
+                                    "Ruby News"
+                                ),
                                 React.createElement("br", null),
-                                React.createElement("p", null, "Newletter format"),
+                                React.createElement(
+                                    "p",
+                                    { className: "newsletter_format" },
+                                    "Newletter format"
+                                ),
                                 React.createElement("input", {
-                                    onChange: this.updateProgress,
+                                    onChange: this.change,
+                                    onInput: this.updateProgress,
                                     checked: this.state.format === "html_format",
                                     id: "html_format",
                                     type: "radio",
                                     name: "format",
                                     value: "html_format"
                                 }),
+                                React.createElement("span", { onClick: this.toggleCheck }),
                                 React.createElement(
                                     "label",
-                                    { htmlFor: "html_format" },
+                                    { onClick: this.toggleCheck, htmlFor: "html_format" },
                                     "HTML"
                                 ),
                                 React.createElement("br", null),
                                 React.createElement("input", {
-                                    onChange: this.updateProgress,
+                                    onChange: this.change,
+                                    onInput: this.updateProgress,
                                     checked: this.state.format === "plaintext_format",
                                     id: "plaintext_format",
                                     type: "radio",
                                     name: "format",
                                     value: "plaintext_format"
                                 }),
+                                React.createElement("span", { onClick: this.toggleCheck }),
                                 React.createElement(
                                     "label",
-                                    { htmlFor: "plaintext_format" },
+                                    { onClick: this.toggleCheck, htmlFor: "plaintext_format" },
                                     "Plaintext"
                                 ),
                                 React.createElement("br", null),
                                 React.createElement(
                                     "label",
-                                    { htmlFor: "other_topics" },
+                                    { id: "other_topics_label", htmlFor: "other_topics" },
                                     "Other topics you would like to hear about"
                                 ),
                                 React.createElement("br", null),
@@ -663,7 +718,9 @@ var Form = (function(_React$Component) {
     return Form;
 })(React.Component);
 
+Form.propTypes = { prog: React.PropTypes.object.isRequired };
+
 ReactDOM.render(
-    React.createElement(Form, null),
+    React.createElement(Form, { prog: initial_state }),
     document.getElementsByClassName("signup")[0]
 );
