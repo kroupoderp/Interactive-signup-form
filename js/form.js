@@ -1,4 +1,7 @@
-
+import React from 'react'
+import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
+import swal from 'sweetalert'
 
 
 let initial_state = {
@@ -417,6 +420,6 @@ class Form extends React.Component {
     }
 }
 
-Form.propTypes = {prog: React.PropTypes.object.isRequired};
+Form.propTypes = {prog: PropTypes.object.isRequired};
 
 ReactDOM.render(<Form prog={initial_state}/>, document.getElementsByClassName('signup')[0]);

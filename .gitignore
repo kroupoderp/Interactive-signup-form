@@ -3,3 +3,4 @@
 *.xml
 *.iml
 *.pages
+/node_modules/
