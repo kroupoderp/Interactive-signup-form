@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import swal from 'sweetalert'
+import $ from 'jquery'
 
 
 let initial_state = {

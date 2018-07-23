@@ -1,5 +1,4 @@
 
-
 module.exports = {
 
     entry: "./js/form.js",
@@ -17,6 +16,6 @@ module.exports = {
                 }
             }
         ]
-    }
+    },
 };
 
