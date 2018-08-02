@@ -236,7 +236,8 @@ class Form extends React.Component {
                 e.preventDefault();
                 swal({
                     title: "Thank you for signing up",
-                    icon: "success"
+                    icon: "success",
+                    closeOnClickOutside: false,
                 });
                 $('.swal-button').on('click', () => {
                     $('html, body').scrollTop(0);
