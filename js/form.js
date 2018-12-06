@@ -87,27 +87,17 @@ class Form extends React.Component {
             let progress = JSON.parse(sessionStorage.getItem('recentProgress'));
 
             if (progress !== null) {
-                this.state.full_name = progress.full_name;
-                this.state.email_address = progress.email_address;
-                this.state.phone_number = progress.phone_number;
-                this.state.street_address = progress.street_address;
-                this.state.city = progress.city;
-                this.state.province = progress.province;
-                this.state.postal_code = progress.postal_code;
-                this.state.html = progress.html;
-                this.state.css = progress.css;
-                this.state.js = progress.js;
-                this.state.python = progress.python;
-                this.state.ruby = progress.ruby;
-                this.state.html_format = progress.html_format;
-                this.state.format = progress.format;
-                this.state.other_topics = progress.other_topics;
+                for (let x in this.state) {     // x represents the field
+                    this.state[x] = progress[x]
+                }
             }
         }
 
     }
 
-    componentDidMount() {           // contains code for validation
+    componentDidMount() {
+
+        // contains code for validation
         let mistakes = 0;
 
         let name_format = /^[a-zA-Z\s]+$/i;
