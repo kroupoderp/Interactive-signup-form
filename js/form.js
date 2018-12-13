@@ -34,6 +34,7 @@ class Form extends React.Component {
     }
 
     updateProgress(e) {
+
         if(this.supportsLocalStorage()) {
 
             if(e.target.type !== "radio" && e.target.type !== "checkbox") {
@@ -95,7 +96,28 @@ class Form extends React.Component {
 
     }
 
+    reset() {
+        this.setState({
+            full_name: "",
+            email_address: "",
+            phone_number: "",
+            street_address: "",
+            city: "",
+            province: "",
+            postal_code: "",
+            html: false,
+            css: false,
+            js: false,
+            python: false,
+            ruby: false,
+            format: "",
+            other_topics: "",
+        })
+    }
+
     componentDidMount() {
+
+        let reset = this.reset.bind(this);
 
         // contains code for validation
         let mistakes = 0;
@@ -188,9 +210,6 @@ class Form extends React.Component {
             });
         }
 
-
-
-
         let message = "Please check the following fields: \n";
         let form = document.getElementsByTagName('form')[0];
 
@@ -224,32 +243,34 @@ class Form extends React.Component {
                 message = "Please check the following fields: \n";
             }   else {
                 e.preventDefault();
-                swal({
-                    title: "Thank you for signing up",
-                    icon: "success",
-                    closeOnClickOutside: false,
-                });
-                $('.swal-button').on('click', () => {
-                    $('html, body').scrollTop(0);
-                    console.log($("form").serialize());
-                    sessionStorage.removeItem('recentProgress');
-                    this.setState({
-                        full_name: "",
-                        email_address: "",
-                        phone_number: "",
-                        street_address: "",
-                        city: "",
-                        province: "",
-                        postal_code: "",
-                        html: false,
-                        css: false,
-                        js: false,
-                        python: false,
-                        ruby: false,
-                        format: "",
-                        other_topics: "",
-                    })
-                });
+
+                let button = document.getElementsByTagName("button")[0];
+
+                button.textContent = "";
+
+                button.innerHTML = `
+                    <svg id="loadingIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16">
+                        <path fill="white" d="M9.9.2l-.2 1C12.7 2 15 4.7 15 8c0 3.9-3.1 7-7 7s-7-3.1-7-7c0-3.3 2.3-6 5.3-6.8l-.2-1C2.6 1.1 0 4.3 0 8c0 4.4 3.6 8 8 8s8-3.6 8-8c0-3.7-2.6-6.9-6.1-7.8z"/>
+                    </svg>
+                `;
+
+
+                window.setTimeout(function() {
+
+                    button.textContent = "Sign Up";
+
+                    swal({
+                        title: "Thank you for signing up",
+                        icon: "success",
+                        closeOnClickOutside: false,
+                    });
+                    $('.swal-button').on('click', () => {
+                        $('html, body').scrollTop(0);
+                        console.log($("form").serialize());
+                        sessionStorage.removeItem('recentProgress');
+                        reset()
+                    });
+                }, 2000);
             }
         });
     }
@@ -331,7 +352,7 @@ class Form extends React.Component {
                             </select>
 
                             <div className="trasp">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 386.257 386.257">
+                                <svg id="dropdownArrow"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 386.257 386.257">
                                     <path fill="darkblue" d="M0 96.879l193.129 192.5 193.128-192.5z"/>
                                 </svg>
                             </div>
@@ -401,7 +422,7 @@ class Form extends React.Component {
                         <br/>
 
                     </fieldset>
-                    <button type="submit">Sign Up</button>
+                    <button id="submitButton" type="submit">Sign Up</button>
                 </form>
                 </main>
                 <footer>
