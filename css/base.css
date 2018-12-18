@@ -68,6 +68,7 @@ button:focus {
    detects an invalid format. */
 
 input:invalid {
+    -webkit-box-shadow: none;
     box-shadow: none;
 }
 
@@ -161,6 +162,10 @@ select {
 #loadingIcon {
     position: relative;
     bottom: 2px;
+    -webkit-transform-origin: 50% 50%;
+    -ms-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    -webkit-animation: rotate linear 1s infinite;
     animation: rotate linear 1s infinite;
 }
 
@@ -363,8 +368,16 @@ fieldset:first-child legend h2 {
     }
 }
 
+@-webkit-keyframes rotate {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
 @keyframes rotate {
     100% {
+        -webkit-transform: rotate(360deg);
         transform: rotate(360deg);
     }
 }
