@@ -24,7 +24,7 @@ let initial_state = {
 
 
 
-class Form extends React.Component {
+class Main extends React.Component {
 
     constructor(props) {
         super(props);
@@ -433,6 +433,6 @@ class Form extends React.Component {
     }
 }
 
-Form.propTypes = {prog: PropTypes.object.isRequired};
+Main.propTypes = {prog: PropTypes.object.isRequired};
 
-ReactDOM.render(<Form prog={initial_state}/>, document.getElementsByClassName('signup')[0]);
+ReactDOM.render(<Main prog={initial_state}/>, document.getElementsByClassName('signup')[0]);
