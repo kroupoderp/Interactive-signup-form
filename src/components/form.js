@@ -1,34 +1,28 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
-import swal from 'sweetalert'
-import $ from 'jquery'
+import React from 'react';
+import swal from 'sweetalert';
+import $ from 'jquery';
 
-
-let initial_state = {
-    full_name: "",
-    email_address: "",
-    phone_number: "",
-    street_address: "",
-    city: "",
-    province: "",
-    postal_code: "",
-    html: false,
-    css: false,
-    js: false,
-    python: false,
-    ruby: false,
-    format: "",
-    other_topics: "",
-};
-
-
-
-class Main extends React.Component {
+export default class Form extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = this.props.prog;
+        this.state = {
+            full_name: "",
+            email_address: "",
+            phone_number: "",
+            street_address: "",
+            city: "",
+            province: "",
+            postal_code: "",
+            html: false,
+            css: false,
+            js: false,
+            python: false,
+            ruby: false,
+            format: "",
+            other_topics: "",
+            submitting: false,
+        };
 
         this.updateProgress = this.updateProgress.bind(this);
     }
@@ -89,7 +83,9 @@ class Main extends React.Component {
 
             if (progress !== null) {
                 for (let x in this.state) {     // x represents the field
-                    this.state[x] = progress[x]
+                    if (this.state[x] !== "submitting") {
+                        this.state[x] = progress[x]
+                    }
                 }
             }
         }
@@ -115,9 +111,22 @@ class Main extends React.Component {
         })
     }
 
+    loadAnimation(boolean) {
+        if (boolean) {
+            this.setState({
+                submitting: true
+            })
+        } else {
+            this.setState({
+                submitting: false
+            })
+        }
+    }
+
     componentDidMount() {
 
         let reset = this.reset.bind(this);
+        let animate = this.loadAnimation.bind(this);
 
         // contains code for validation
         let mistakes = 0;
@@ -243,22 +252,9 @@ class Main extends React.Component {
                 message = "Please check the following fields: \n";
             }   else {
                 e.preventDefault();
-
-                let button = document.getElementsByTagName("button")[0];
-
-                button.textContent = "";
-
-                button.innerHTML = `
-                    <svg id="loadingIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16">
-                        <path fill="white" d="M9.9.2l-.2 1C12.7 2 15 4.7 15 8c0 3.9-3.1 7-7 7s-7-3.1-7-7c0-3.3 2.3-6 5.3-6.8l-.2-1C2.6 1.1 0 4.3 0 8c0 4.4 3.6 8 8 8s8-3.6 8-8c0-3.7-2.6-6.9-6.1-7.8z"/>
-                    </svg>
-                `;
-
-
+                animate(true);
                 window.setTimeout(function() {
-
-                    button.textContent = "Sign Up";
-
+                    animate(false)
                     swal({
                         title: "Thank you for signing up",
                         icon: "success",
@@ -279,7 +275,7 @@ class Main extends React.Component {
 
     render() {
         return (
-            <div>
+            <React.Fragment>
                 <header>
                     <div className="banner">
                         <h1>The Code review</h1>
@@ -292,7 +288,7 @@ class Main extends React.Component {
                 </header>
                 <main>
                     <hr/>
-                    <form action="index.html" method="post" noValidate>
+                    <form action="" method="post" noValidate>
                     <fieldset className="contact_information clearfix">
                         <legend><h2>Contact information</h2></legend>
 
@@ -422,17 +418,19 @@ class Main extends React.Component {
                         <br/>
 
                     </fieldset>
-                    <button id="submitButton" type="submit">Sign Up</button>
+                    {this.state.submitting ? 
+                    <button id="submitButton" type="submit">
+                        <svg id="loadingIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16">
+                            <path fill="white" d="M9.9.2l-.2 1C12.7 2 15 4.7 15 8c0 3.9-3.1 7-7 7s-7-3.1-7-7c0-3.3 2.3-6 5.3-6.8l-.2-1C2.6 1.1 0 4.3 0 8c0 4.4 3.6 8 8 8s8-3.6 8-8c0-3.7-2.6-6.9-6.1-7.8z"/>
+                        </svg>
+                    </button>
+                        : <button id="submitButton" type="submit">Sign Up</button>}
                 </form>
                 </main>
                 <footer>
                     <p>&copy; The Code Review</p>
                 </footer>
-            </div>
+            </React.Fragment>
         )
     }
 }
-
-Main.propTypes = {prog: PropTypes.object.isRequired};
-
-ReactDOM.render(<Main prog={initial_state}/>, document.getElementsByClassName('signup')[0]);

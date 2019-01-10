@@ -4,3 +4,4 @@
 *.iml
 *.pages
 /node_modules/
+.DS_Store
