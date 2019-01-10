@@ -594,7 +594,7 @@ input, textarea, select, .trasp {
     float: right;
     position: absolute;
     right: 0;
-    top: 18px;
+    top: 36px;
     z-index: -100;
 }
 
@@ -625,7 +625,7 @@ select {
     animation: rotate linear 1s infinite;
 }
 
-.clearfix:nth-of-type(6) {
+.clearfix:nth-of-type(8) {
     position: relative;
 }
 

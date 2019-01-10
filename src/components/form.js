@@ -9,6 +9,8 @@ export default class Form extends React.Component {
         this.state = {
             full_name: "",
             email_address: "",
+            username: "",
+            pwd: "",
             phone_number: "",
             street_address: "",
             city: "",
@@ -29,18 +31,14 @@ export default class Form extends React.Component {
 
     updateProgress(e) {
 
-        if(this.supportsLocalStorage()) {
-
             if(e.target.type !== "radio" && e.target.type !== "checkbox") {
                 this.setState({[e.target.id]: e.target.value})
-
             }   else if (e.target.type === "checkbox") {
                     this.setState({[e.target.id]: e.target.checked})
 
             }   else if (e.target.type === "radio"){
                     this.setState({format: e.target.id})
-            }
-        }
+            }   
     }
 
     toggleCheck(e) {
@@ -72,7 +70,9 @@ export default class Form extends React.Component {
     // start of component lifecycle methods excluding render
     componentDidUpdate() {
         if(this.supportsLocalStorage()) {
-            sessionStorage.setItem('recentProgress', JSON.stringify(this.state))
+            let filteredState = this.state;
+            filteredState.pwd = null;
+            sessionStorage.setItem('recentProgress', JSON.stringify(filteredState))
         }
     }
 
@@ -96,6 +96,8 @@ export default class Form extends React.Component {
         this.setState({
             full_name: "",
             email_address: "",
+            username: "",
+            pwd: "",
             phone_number: "",
             street_address: "",
             city: "",
@@ -133,6 +135,8 @@ export default class Form extends React.Component {
 
         let name_format = /^[a-zA-Z\s]+$/i;
         let email_format = /[^@]+@[^@]+\.[a-z]{2,3}$/i;
+        let username_format = /^[a-z0-9]+$/i;
+        let pwd_format = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/i;
         let postal_code_format = /\w{6}$/;
         let phone_num_format = /^[0-9]{10,11}$/;
 
@@ -177,20 +181,45 @@ export default class Form extends React.Component {
                     create_warning("", 1, true);
                 }
             }
-            if (e.target.id === "phone_number" || e.type === "submit") {
-                if (inputs[2].value.search(phone_num_format) === -1
+            if (e.target.id === "username" || e.type === "submit") {
+                if (inputs[2].value.length === 0) {
+                    create_warning("* Please provide a username", 2);
+                } else if (inputs[2].value.search(username_format) === -1
                     && inputs[2].value.length > 0) {
-                    create_warning("Not a valid phone number, make sure to include only numbers", 2)
+                    create_warning("*usernames must only contain letters and/or numbers", 2)
                 } else {
                     create_warning("", 2, true);
                 }
             }
-            if (e.target.id === "postal_code" || e.type === "submit") {
-                if (inputs[3].value.search(postal_code_format) === -1
-                    && inputs[3].value.length !== 0) {
-                    create_warning("Postal code is invalid", 3)
+            if (e.target.id === "pwd" || e.type === "submit") {
+                if (inputs[3].value.length === 0) {
+                    create_warning("* Please provide a password", 3);
+                } else if (inputs[3].value.length < 8) {
+                    create_warning("* Password must be at least 8 characters long", 3);        
+                }
+                
+                
+                else if (inputs[3].value.search(pwd_format) === -1
+                    && inputs[3].value.length > 0) {
+                    create_warning("*password must contain a lowercase, uppercase and number", 3)
                 } else {
                     create_warning("", 3, true);
+                }
+            }
+            if (e.target.id === "phone_number" || e.type === "submit") {
+                if (inputs[4].value.search(phone_num_format) === -1
+                    && inputs[4].value.length > 0) {
+                    create_warning("Not a valid phone number, make sure to include only numbers", 4)
+                } else {
+                    create_warning("", 4, true);
+                }
+            }
+            if (e.target.id === "postal_code" || e.type === "submit") {
+                if (inputs[5].value.search(postal_code_format) === -1
+                    && inputs[5].value.length !== 0) {
+                    create_warning("Postal code is invalid", 5)
+                } else {
+                    create_warning("", 5, true);
                 }
             }
 
@@ -234,10 +263,18 @@ export default class Form extends React.Component {
                 mistakes += 1;
             }
             if(alert[2].textContent) {
-                message += "\nPhone Number ";
+                message += "\nUsername ";
                 mistakes += 1;
             }
             if(alert[3].textContent) {
+                message += "\nPassword ";
+                mistakes += 1;
+            }
+            if(alert[4].textContent) {
+                message += "\nPhone Number ";
+                mistakes += 1;
+            }
+            if(alert[5].textContent) {
                 message += "\nPostal Code ";
                 mistakes += 1;
             }
@@ -308,6 +345,22 @@ export default class Form extends React.Component {
                                 <p className="warn"></p>
                         </div>
 
+                        <div className="clearfix wrap">
+                            <label htmlFor="username">Username</label>
+                            <input onChange={this.updateProgress} value={this.state.username}
+                                   className="validation" id="username" type="text" name="username"
+                                   placeholder="required" required/>
+                                <p className="warn"></p>
+                        </div>
+
+                        <div className="clearfix wrap">
+                            <label htmlFor="pwd">Password</label>
+                            <input onChange={this.updateProgress} value={this.state.pwd}
+                                   className="validation" id="pwd" type="password" name="pwd"
+                                   placeholder="required" required/>
+                                <p className="warn"></p>
+                        </div>
+   
                         <div className="clearfix wrap">
                             <label htmlFor="phone_number">Phone Number</label>
                             <input onChange={this.updateProgress} value={this.state.phone_number}
